@@ -1,0 +1,84 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Math Game</title>
+	<!-- Include the Bootstrap CSS stylesheet -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<style>
+		/* Center the container horizontally and vertically */
+		.container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			min-height: 100vh;
+		}
+	</style>
+	<script type="text/javascript">
+		var num1, num2, operator, answer;
+		var history = [];
+
+		function generateQuestion() {
+			num1 = Math.floor(Math.random() * 10) + 1;
+			num2 = Math.floor(Math.random() * 10) + 1;
+			operator = Math.floor(Math.random() * 3) + 1;
+			switch (operator) {
+				case 1:
+					operator = "+";
+					answer = num1 + num2;
+					break;
+				case 2:
+					operator = "-";
+					answer = num1 - num2;
+					break;
+				case 3:
+					operator = "*";
+					answer = num1 * num2;
+					break;
+			}
+			document.getElementById("question").innerHTML = num1 + " " + operator + " " + num2 + " = ?";
+		}
+
+		function checkAnswer() {
+			var userAnswer = document.getElementById("answer").value;
+			if (userAnswer == answer) {
+				document.getElementById("answer").value = ""; // clear the input field
+				document.getElementById("feedback").innerHTML = "<div class='alert alert-success'>Correct!</div>";
+				history.push(num1 + " " + operator + " " + num2 + " = " + answer + " (correct)");
+				generateQuestion();
+			}
+			else {
+				document.getElementById("feedback").innerHTML = "<div class='alert alert-danger'>Incorrect. Try again.</div>";
+				history.push(num1 + " " + operator + " " + num2 + " = " + userAnswer + " (incorrect)");
+			}
+			// Update the history display
+			var historyList = "<ul>";
+			for (var i = 0; i < history.length; i++) {
+				historyList += "<li>" + history[i] + "</li>";
+			}
+			historyList += "</ul>";
+			document.getElementById("history").innerHTML = historyList;
+		}
+	</script>
+</head>
+
+<body onload="generateQuestion()">
+    <div class="container">
+        <h1>Math Game</h1>
+        <div id="question"></div>
+        <div class="form-group">
+            <label for="answer">Answer:</label>
+            <input type="number" class="form-control" id="answer">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="checkAnswer()">Check Answer</button>
+        <div id="feedback"></div>
+        <h2>History</h2>
+        <div id="history"></div>
+    </div>
+</body>
+
+<!-- Include the Bootstrap JavaScript library -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2"
+
+
